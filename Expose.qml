@@ -320,9 +320,6 @@ Scope {
               radius: Style.cornerRadius
               // No clip: true here — Qt Quick clips rectangularly only, and
               // it conflicts with the layer mask below, which clips rounded.
-              border.width: thumb.active || thumb.dropTarget || thumbMouse.containsMouse ? 2 : 1
-              border.color: thumb.active || thumb.dropTarget ? root.accent
-                : Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, thumbMouse.containsMouse ? 0.5 : 0.2)
               layer.enabled: true
               layer.smooth: true
               layer.effect: MultiEffect {
@@ -345,6 +342,18 @@ Scope {
                   live: false
                 }
               }
+            }
+
+            // Border above the previews, like the tile hover outline: with
+            // edge-to-edge content the previews would otherwise paint over
+            // the frame's own border ring.
+            Rectangle {
+              anchors.fill: parent
+              color: "transparent"
+              radius: Style.cornerRadius
+              border.width: thumb.active || thumb.dropTarget || thumbMouse.containsMouse ? 2 : 1
+              border.color: thumb.active || thumb.dropTarget ? root.accent
+                : Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, thumbMouse.containsMouse ? 0.5 : 0.2)
             }
 
             Text {
